@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "wisebits-qa-automation-task"
+version = "1.0.1"
+description = ""
+authors = ["Vitaliy Gridin <gridinv@mail.ru>"]
+readme = "README.md"
+packages = [{include = "wisebits_qa_automation_task"}]
+
+[tool.poetry.dependencies]
+selenium = "^3.11.0"
+webdriver_manager = "*"
+pytest = "*"
+pytest-xdist = "*"
+allure-pytest = "*"
+
+
+[tool.poetry.scripts]
+wisebits_tests = "wisebits_qa_automation_task:main.main"
