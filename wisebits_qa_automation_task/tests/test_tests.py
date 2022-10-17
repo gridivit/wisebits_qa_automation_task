@@ -8,7 +8,7 @@ from wisebits_qa_automation_task.pages.w3schools.try_sql_page import TrySqlPage
 def test_giovanni_rovelli(get_webdriver):
     try_sql_page = TrySqlPage(webdriver=get_webdriver)
     try_sql_page.press_button_run_sql()
-    results = try_sql_page.get_result()
+    results = try_sql_page.get_result2()
 
     giovanni_rovelli = [x for x in results if x['ContactName'] == "Giovanni Rovelli"]
 
@@ -23,7 +23,7 @@ def test_london(get_webdriver):
     try_sql_page = TrySqlPage(webdriver=get_webdriver)
     try_sql_page.set_sql_statement("Select * from Customers where city = 'London'")
     try_sql_page.press_button_run_sql()
-    results = try_sql_page.get_result()
+    results = try_sql_page.get_result2()
 
     assert len(results) == 6, f"result amount customers is {len(results)}"
 
@@ -41,7 +41,7 @@ def test_add_new_line(get_webdriver):
     try_sql_page.set_sql_statement("Select * from Customers where ContactName = 'Tom B. Erichsen'")
     try_sql_page.press_button_run_sql()
 
-    results = try_sql_page.get_result()
+    results = try_sql_page.get_result2()
 
     assert len(results) == 1, f"result amount Tom B. Erichsen is {len(results)}"
 
@@ -76,7 +76,7 @@ def test_update_line(get_webdriver):
     try_sql_page.set_sql_statement(f"Select * from Customers where ContactName = '{contact_name}'")
     try_sql_page.press_button_run_sql()
 
-    results = try_sql_page.get_result()
+    results = try_sql_page.get_result2()
 
     assert len(results) == 1, f"result amount Tom B. Erichsen is {len(results)}"
     assert results[0]['CustomerName'] == customer_name
@@ -94,7 +94,7 @@ def test_like(get_webdriver):
     try_sql_page = TrySqlPage(webdriver=get_webdriver)
     try_sql_page.set_sql_statement("SELECT * FROM Customers WHERE ContactName LIKE 'Giov%';")
     try_sql_page.press_button_run_sql()
-    results = try_sql_page.get_result()
+    results = try_sql_page.get_result2()
 
     assert len(results) is 1, "Giovanni Rovelli don't found"
     assert results[0]['Address'] == 'Via Ludovico il Moro 22', "address is not 'Via Ludovico il Moro 22'"

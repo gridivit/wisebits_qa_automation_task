@@ -1,3 +1,5 @@
+import time
+from contextlib import contextmanager
 from typing import List, Any, Dict
 
 from allure_commons._allure import step
@@ -61,4 +63,40 @@ class TrySqlPage:
                 row[fields_name[count]] = row_cells.text
             table.append(row)
 
+        return table
+
+    @step("try_sql_page: get result table")
+    def get_result2(self) -> List[Dict[Any, Any]]:
+        element: WebElement = WebDriverWait(self.webdriver, 10).until(
+            expected_conditions.presence_of_element_located(TrySqlAllocators.GET_RESULT.value)
+        )
+        print(time.monotonic())
+        rows = element.find_elements_by_xpath('//*[@id="divResultSQL"]/div/table/tbody/tr')
+        fields_element = rows[0]
+
+        table = []
+        fields_name = []
+        for field_elem in fields_element.find_elements_by_xpath("./th"):
+            fields_name.append(field_elem.text)
+
+        row = {}
+        cou = 0
+
+        print(time.monotonic())
+        ttt = self.webdriver.execute_script("return Array.from(document.querySelectorAll('td')).map(function(element) {return element.textContent;})")
+
+        print(time.monotonic())
+        for row_cells in ttt:
+            text = row_cells
+            row[fields_name[cou]] = text
+            cou += 1
+
+            print("get text" + str(time.monotonic()))
+            if cou == len(fields_name):
+                cou = 0
+                table.append(row)
+                row = {}
+
+        table.pop(-1)
+        table.pop(-1)
         return table
